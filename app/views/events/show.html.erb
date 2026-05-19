@@ -1,5 +1,9 @@
 <h1>About this event:</h1>
 <p>At <%= @event.location%> and on <%= @event.event_date %></p>
 
-
+<p>Would you like to join this event></p>
+<%= button_to "Join the event!", attendings_path(event_id: @event.id) %> 
+<%# Can add a class to the button for styling? %>
 <p><%= link_to "Back to events list", root_path %></p>
+
+<%#  %>
