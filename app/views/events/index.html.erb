@@ -1,0 +1,16 @@
+<h1>List of upcoming events</h1>
+<p><%= link_to "login", new_user_session_path %></p>
+
+<p><%=link_to "Join us my friend!", new_user_registration_path %></p>
+
+<% if @events.any? && @events != nil %>
+    <% @events.each do |event| %>
+        <ul>
+            <p>Event on <%= event.event_date %> (<%=link_to "view this event", event_path(event)%>)</p>
+            <p>At location: <%= event.location %></p>
+        </ul>
+    <% end %>
+<% end %>
+
+
+<%= link_to "Would you like to create a new event?", new_event_path%>
