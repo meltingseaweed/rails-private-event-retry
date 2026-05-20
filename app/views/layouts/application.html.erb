@@ -24,6 +24,15 @@
   </head>
 
   <body>
+      <div class="header">
+        <p><%= link_to "Home", events_path %></p>
+        <p><%= link_to "My Page", current_user %></p>
+        <p><%= link_to "Login", new_user_session_path %></p>
+        <p><%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %></p>
+      </div>
+    </div>
+
+
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
     <%= yield %>

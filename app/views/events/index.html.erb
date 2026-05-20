@@ -1,15 +1,34 @@
 <h1>List of upcoming events</h1>
 <p><%= link_to "login", new_user_session_path %></p>
-
 <p><%=link_to "Join us my friend!", new_user_registration_path %></p>
+<h3>test current_user: <%=current_user%> | test current_user.id: <%=current_user.id%>
+
 
 <% if @events.any? && @events != nil %>
-    <% @events.each do |event| %>
-        <ul>
-            <p>Event on <%= event.event_date %> (<%=link_to "view this event", event_path(event)%>)</p>
-            <p>At location: <%= event.location %></p>
-        </ul>
+    <h2>Past events</h2>
+    <% if @past.any? %>
+        <% @past.each do |event| %>
+            <li>
+                <p>Event on at: <%= event.location %></p>
+                <p>on <%= event.event_date%> (<%=link_to "view this event", event_path(event)%>)</p>
+            </li>
+        <% end %>
+    <% else %>
+        <p>There are no past events.</p>
     <% end %>
+    <hr>
+    <h2>Upcoming Events</h2>
+    <% if @upcoming.any? %>
+        <% @upcoming.each do |event| %>
+            <li>
+                <p>Event on at: <%= event.location%></p>
+                <p>on <%= event.event_date%> (<%=link_to "view this event", event_path(event)%>)</p>
+            </li>
+        <% end %>
+    <% else %>
+        <p>There are no upcoming events yet.</p>
+    <% end %>
+
 <% end %>
 
 

@@ -8,3 +8,37 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+ /* .header,
+ .header_left,
+ .header_right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+ }
+
+ .header_left {
+    display: flex;
+    justify-items: start;
+    gap: 30px;
+    padding-left: 2rem;;
+ }
+
+ .header_right {
+    display: flex;
+    justify-content: end;
+    gap: 50px;
+    padding-right: 2rem;
+ } */
+  body {
+    background-color: #C5c6c0;
+    padding: 0;
+    margin: 0;
+  }
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    
+    background-color: #F28C28;
+}
