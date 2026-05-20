@@ -1,11 +1,57 @@
-<h1>Events created by <%= @user.email %></h1>
+<h1>Hi <%= @user.email %>!</h1>
+<p>Here are some details about your events:</p>
 
 <% if @user.events.any? %>
-    <% @user.events.each do |event| %>
-        <p>Event date: <%= event.event_date %></p>
-        <p>Location: <%= event.location %></p>
-        <p>-----------</p>
-    <% end %>
+    <h2>Events created by you:</h2>
+    <ul>
+        <% @user.events.each do |event| %>
+            <li>
+                <p>Event date: <%= event.event_date %></p>
+                <p>Location: <%= event.location %></p>
+            </li>
+        <% end %>
+    </ul>
 <% else %>
-    <p>No events created by this user yet.</p>
+    <p>You have not made any events yet. Would you like to</p>
+    <% link_to "create an event?", new_event_path %>
 <% end %>
+<hr>
+
+<% if @user.attended_events.any? %>
+    <% today = Date.today %>
+    <% previous_events = false %>
+    <h2>Events you have already attended:</h2>
+    <ul>
+        <% @user.attended_events.each do |event| %>
+            <% if event.event_date.before?(today)%>    
+                <li>
+                    <p>Location: <%= event.location %><p>
+                    <p>Event date: <%= event.event_date %></p>
+                </li>
+                <% previous_events = true %>
+            <% end %>
+        <% end %>
+        <% if previous_events == false %>
+            <p>You have not attended any events yet.</p>
+        <% end %>
+    </ul>
+
+    <h2>Events you have signed up for:</h2>
+    <% future_events = false %>
+    <ul>
+        <% @user.attended_events.each do |event| %>
+            <% if event.event_date.after?(today) || event.event_date == today %>
+                <li>
+                    <p>Location: <%= event.location %><p>
+                    <p>Event date: <%= event.event_date %></p>
+                </li>
+                <% future_events = true%>
+            <% end %>
+        <% end %>
+        <% if future_events == false %>
+            <p>You have not signed up for any more events yet.</p>
+        <% end %>
+    </ul>
+<% end %>
+
+<%= link_to "Return to Event list", root_path %>
