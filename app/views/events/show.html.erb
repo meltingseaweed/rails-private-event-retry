@@ -1,7 +1,20 @@
 <h1>About this event:</h1>
 <p>At <%= @event.location%> and on <%= @event.event_date %></p>
+<h2>People joining this event:</h2>
 
-<p>Would you like to join this event></p>
+    <% if @event.attendees.any? %>
+        <ul>
+            <% @event.attendees.each do |attendee| %>
+                <li><%= attendee.email %></li>
+            <% end %>
+        </ul>
+        <p>Would you like to join this event too?</p>
+    <% else %>
+        <p>There is currently nobody joining.</p>
+        <p>Would you like to be the first to join?</p>
+    <% end %>
+</ul>
+
 <%= button_to "Join the event!", attendings_path(event_id: @event.id) %> 
 <%# Can add a class to the button for styling? %>
 <p><%= link_to "Back to events list", root_path %></p>
