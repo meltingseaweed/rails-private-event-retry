@@ -1,13 +1,4 @@
 
 <h1>Let's make a new event!</h1>
-<p>For informational purposes, the current user is:</p>
-<p><%= current_user.email %></p>
-<%= form_with model: @events do |form| %>
-        <div>
-            <%= label_tag(:date, "Choose the date of your event:") %>
-            <%= form.date_field :event_date, placeholder: "yyyy-mm-dd" %><br>
-            <%= label_tag(:location, "Location of the event:") %>
-            <%= form.text_field :location, placeholder: "The park" %><br>
-            <%= form.submit "Submit" %>
-        </div>
-<% end %>
+
+<%= render "event_form", event: @event %>

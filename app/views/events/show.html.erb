@@ -6,7 +6,7 @@
     <% if @event.attendees.any? %>
         <ul>
             <% @event.attendees.each do |attendee| %>
-                <li><%= attendee.email %></li>
+                <li><%= attendee.username %></li>
             <% end %>
         </ul>
     <% else %>
@@ -22,7 +22,7 @@
                 <% @all_users.each do |user| %>
                     <% if !@event.attendees.where(id: user.id).any? && user != current_user%>
                         <% if !@event.invited_users.where(id: user.id).any? %>
-                            <p><%= user.email %> <%= button_to "Invite", invitations_path(event_id: @event.id, user_id: user.id) %></p>
+                            <p><%= user.username %> <%= button_to "Invite", invitations_path(event_id: @event.id, user_id: user.id) %></p>
                         <% end %>
                     <% end %>
                 <% end %>
@@ -30,6 +30,9 @@
     <% else %>
         <p> There are currently no other users to invite.</p>
     <% end %>
+    <p>Would you like to edit or delete this event?</p>
+    <%= button_to "~Edit the event~", edit_event_path(@event), method: :get %>
+    <%= button_to "! Delete the event !", event_path, method: :delete, data: { turbo_confirm: "Are you sure you want to delete this event?" } %>
 <% elsif !@event.attendees.where(id: current_user.id).any? %>
     <p>Would you like to join this event?</p>
     <%= button_to "Join the event!", attendings_path(event_id: @event.id) %> 

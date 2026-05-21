@@ -1,0 +1,9 @@
+<%= form_with model: event do |form| %>
+        <div>
+            <%= label_tag(:date, "Choose the date of your event:") %>
+            <%= form.date_field :event_date, placeholder: "yyyy-mm-dd" %><br>
+            <%= label_tag(:location, "Location of the event:") %>
+            <%= form.text_field :location, placeholder: "The park" %><br>
+            <%= form.submit "Submit" %>
+        </div>
+<% end %>

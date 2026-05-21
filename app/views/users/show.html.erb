@@ -1,4 +1,4 @@
-<h1>Hi <%= @user.email %>!</h1>
+<h1>Hi <%= @user.username %>!</h1>
 <p>Here are some details about your events:</p>
 
 <% if @user.events.any? %>
@@ -15,6 +15,7 @@
     <p>You have not made any events yet. Would you like to</p>
     <% link_to "create an event?", new_event_path %>
 <% end %>
+
 <hr>
 
 <% if @user.attended_events.any? %>
@@ -44,6 +45,7 @@
                 <li>
                     <p>Location: <%= event.location %><p>
                     <p>Event date: <%= event.event_date %></p>
+                    <%= button_to "Cancel my Participation", user_path(event_id: event.id), method: :delete, data: { turbo_confirm: "Are you sure you want to delete this event?" } %>
                 </li>
                 <% future_events = true%>
             <% end %>
@@ -54,4 +56,5 @@
     </ul>
 <% end %>
 
+<p>I would like to <%= link_to "Edit my details", edit_user_registration_path %></p>
 <%= link_to "Return to Event list", root_path %>

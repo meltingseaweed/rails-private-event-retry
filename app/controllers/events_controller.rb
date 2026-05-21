@@ -10,12 +10,12 @@ class EventsController < ApplicationController
   end
 
   def new
-    @events = Event.new
+    @event = Event.new
   end
 
   def create
-    @events = current_user.events.build(event_params)
-    if @events.save
+    @event = current_user.events.build(event_params)
+    if @event.save
       redirect_to root_path, notice: "Event created successfully :)"
     else
       render :new, status: :unprocessable_entity
@@ -25,6 +25,31 @@ class EventsController < ApplicationController
     current_event
     @all_users = User.all
   end
+
+  def edit
+    current_event
+  end
+
+  def update
+    current_event
+    if @event.update(event_params)
+      redirect_to root_path, notice: "Event updated successfully :)"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    current_event
+    if @event.invitations.any?
+        Invitation.where(invited_events_id: @event.id).destroy_all
+    end
+    if @event.attendings.any?
+        Attending.where(attended_events_id: @event.id).destroy_all
+    end
+    @event.destroy
+    redirect_to root_path, status: :see_other, notice: "The event was successfully deleted"
+    end
 
   private
   def event_params
