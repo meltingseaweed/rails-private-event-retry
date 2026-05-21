@@ -1,3 +1,4 @@
+
 <h1>About this event:</h1>
 <p>At <%= @event.location%> and on <%= @event.event_date %></p>
 <h2>People joining this event:</h2>
@@ -14,9 +15,22 @@
         <p>Would you like to be the first to join?</p>
     <% end %>
 </ul>
-
 <%= button_to "Join the event!", attendings_path(event_id: @event.id) %> 
 <%# Can add a class to the button for styling? %>
-<p><%= link_to "Back to events list", root_path %></p>
-
-<%#  %>
+<hr>
+<% if @creator == true %>
+<% if @all_users.exists? %>
+    <h2>Would you like to invite anyone to your event?</h2>
+        <ul>
+            <% @all_users.each do |user| %>
+                <% if @event.attendees.where(id: user.id).count < 1 && user != current_user%>
+                    <% if @event.invited_users.where(id: user.id).count < 1 %>
+                        <p><%= user.email %> <%= button_to "Invite", invitations_path(event_id: @event.id, user_id: user.id) %></p>
+                    <% end %>
+                <% end %>
+            <% end %>
+        </ul>
+    <% end %>
+<% else %>
+    <p> There are currently no other users to invite.</p>
+<% end %>
