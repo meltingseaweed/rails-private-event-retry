@@ -7,6 +7,7 @@ class Event < ApplicationRecord
   scope :upcoming_events, ->(today) { where("event_date > ?", today) }
   scope :past_events, ->(today) { where("event_date < ?", today) }
 
+  # Commented code below shows the methods created for task 1 in Finishing Touches.
   # def upcoming_event?(event)
   #   if event.event_date.after?(Date.today)
   #     true
