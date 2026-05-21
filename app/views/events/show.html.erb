@@ -33,7 +33,7 @@
     <p>Would you like to edit or delete this event?</p>
     <%= button_to "~Edit the event~", edit_event_path(@event), method: :get %>
     <%= button_to "! Delete the event !", event_path, method: :delete, data: { turbo_confirm: "Are you sure you want to delete this event?" } %>
-<% elsif !@event.attendees.where(id: current_user.id).any? %>
+<% elsif !@event.attendees.where(id: current_user.id).any? && @event.invitations.where(invited_users_id: current_user.id).any? %>
     <p>Would you like to join this event?</p>
     <%= button_to "Join the event!", attendings_path(event_id: @event.id) %> 
 <% end %>

@@ -4,6 +4,9 @@
             <%= form.date_field :event_date, placeholder: "yyyy-mm-dd" %><br>
             <%= label_tag(:location, "Location of the event:") %>
             <%= form.text_field :location, placeholder: "The park" %><br>
+            <%= label_tag(:visibility, "Would you like this event to be visible to the public?") %>
+            <%# <%= form.select :visibility, Event.visibilities.keys%>
+            <%= form.collection_radio_buttons :visibility, Event.visibilities.keys, :to_s, :humanize %><br>
             <%= form.submit "Submit" %>
         </div>
 <% end %>

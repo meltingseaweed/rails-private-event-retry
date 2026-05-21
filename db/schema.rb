@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_21_041618) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_21_064807) do
   create_table "attendings", force: :cascade do |t|
     t.integer "attended_events_id", null: false
     t.integer "attendee_id", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_21_041618) do
     t.date "event_date"
     t.string "location"
     t.datetime "updated_at", null: false
+    t.integer "visibility"
     t.index ["creator_id"], name: "index_events_on_creator_id"
   end
 

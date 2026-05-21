@@ -49,11 +49,11 @@ class EventsController < ApplicationController
     end
     @event.destroy
     redirect_to root_path, status: :see_other, notice: "The event was successfully deleted"
-    end
+  end
 
   private
   def event_params
-    params.expect(event: [ :event_date, :location ])
+    params.expect(event: [ :event_date, :location, :visibility ])
   end
 
   def current_event
@@ -70,7 +70,7 @@ class EventsController < ApplicationController
 
   def is_authorised
     current_event
-    if @event.invited_users.where(id: current_user.id).any?
+    if @event.invited_users.where(id: current_user.id).any? || @event.visibility == "public_event"
       true
     elsif @event.creator_id != current_user.id
       flash[:notice] = "Sorry, you must be invited or the event creator to view this event."
