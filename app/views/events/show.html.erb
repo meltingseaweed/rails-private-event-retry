@@ -1,6 +1,13 @@
 
 <h1>About this event:</h1>
 <p>At <%= @event.location%> and on <%= @event.event_date %></p>
+<% if @creator %>
+    <p>This event is currently <%= @event.visibility %></p>
+    <p>Click the desired button below to change the visibility of this event:</p>
+    <%= button_to "Make event private", event_path(@event), method: :patch, params: { event: { visibility: :private_event } } %>
+    <%= button_to "Make event public", event_path(@event), method: :patch, params: { event: { visibility: :public_event } } %>
+<% end %>
+
 <h2>People joining this event:</h2>
 
     <% if @event.attendees.any? %>
