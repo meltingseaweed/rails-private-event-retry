@@ -45,7 +45,9 @@ class EventsController < ApplicationController
 
   def is_authorised
     current_event
-    if @event.creator_id != current_user.id # OR Current user is not invited!?
+    if @event.invited_users.where(id: current_user.id).any?
+      true
+    elsif @event.creator_id != current_user.id
       flash[:notice] = "Sorry, you must be invited or the event creator to view this event."
       redirect_to root_path
     end

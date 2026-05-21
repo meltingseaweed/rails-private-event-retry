@@ -9,28 +9,28 @@
                 <li><%= attendee.email %></li>
             <% end %>
         </ul>
-        <p>Would you like to join this event too?</p>
     <% else %>
         <p>There is currently nobody joining.</p>
-        <p>Would you like to be the first to join?</p>
     <% end %>
 </ul>
-<%= button_to "Join the event!", attendings_path(event_id: @event.id) %> 
 <%# Can add a class to the button for styling? %>
 <hr>
 <% if @creator == true %>
-<% if @all_users.exists? %>
-    <h2>Would you like to invite anyone to your event?</h2>
-        <ul>
-            <% @all_users.each do |user| %>
-                <% if @event.attendees.where(id: user.id).count < 1 && user != current_user%>
-                    <% if @event.invited_users.where(id: user.id).count < 1 %>
-                        <p><%= user.email %> <%= button_to "Invite", invitations_path(event_id: @event.id, user_id: user.id) %></p>
+    <% if @all_users.exists? %>
+        <h2>Would you like to invite anyone to your event?</h2>
+            <ul>
+                <% @all_users.each do |user| %>
+                    <% if !@event.attendees.where(id: user.id).any? && user != current_user%>
+                        <% if !@event.invited_users.where(id: user.id).any? %>
+                            <p><%= user.email %> <%= button_to "Invite", invitations_path(event_id: @event.id, user_id: user.id) %></p>
+                        <% end %>
                     <% end %>
                 <% end %>
-            <% end %>
-        </ul>
+            </ul>
+    <% else %>
+        <p> There are currently no other users to invite.</p>
     <% end %>
-<% else %>
-    <p> There are currently no other users to invite.</p>
+<% elsif !@event.attendees.where(id: current_user.id).any? %>
+    <p>Would you like to join this event?</p>
+    <%= button_to "Join the event!", attendings_path(event_id: @event.id) %> 
 <% end %>
